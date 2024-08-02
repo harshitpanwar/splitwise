@@ -1,6 +1,4 @@
-type Props = {}
-
-const Dashboard = (props: Props) => {
+const Dashboard = () => {
   return (
     <div className="flex flex-col items-center justify-center">
       <div className="bg-white rounded-lg p-4 drop-shadow-2xl min-h-screen w-4/12">
