@@ -1,16 +1,12 @@
-type Props = {isVisible: boolean}
-
-const HeaderDropdown = (props: Props) => {
+const HeaderDropdown = () => {
   return (
     <div>
-    {props.isVisible && (
       <ul>
-        <li>My accounnt</li>
+        <li>My account</li>
         <li>Create a group</li>
         <li>Log out</li>
       </ul>
-    )}
-  </div>
+    </div>
   );
 };
 
