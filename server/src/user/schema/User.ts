@@ -15,6 +15,20 @@ export class User extends Document {
 
     @Prop({required: true})
     salt: string;
+
+    @Prop({
+        required: [true, 'Please provide a role'],
+        default: 'unauthorized', 
+        enum: ['unauthorized', 'authorized']
+    })
+    registration_status: string;
+
+    @Prop({required: true, default: Date.now})
+    createdAt: Date;
+
+    @Prop({required: true, default: Date.now})
+    updatedAt: Date;
+
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

@@ -1,5 +1,10 @@
 import { IsEmail, IsEnum, IsString } from "class-validator";
 
+export enum RegistrationStatus {
+    unauthorized = "unauthorized",
+    authorized = "authorized"
+}
+
 export class CreateUserDto {
 
     @IsString()
@@ -10,5 +15,8 @@ export class CreateUserDto {
 
     @IsString()
     password: string;
+    
+    @IsEnum(RegistrationStatus)
+    registration_status: string;
 
 }
