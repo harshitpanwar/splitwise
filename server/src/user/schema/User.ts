@@ -7,13 +7,13 @@ export class User extends Document {
     @Prop({required: true})
     name: string;
 
-    @Prop({required: true})
+    @Prop({required: true, unique: true})
     email: string;
 
-    @Prop({required: true})
+    @Prop({required: true, select: false})
     password: string;
 
-    @Prop({required: true})
+    @Prop({required: true, select: false})
     salt: string;
 
     @Prop({
@@ -22,6 +22,10 @@ export class User extends Document {
         enum: ['unauthorized', 'authorized']
     })
     registration_status: string;
+
+    @Prop({
+        balance: {type: Number, default: 0},
+    })
 
     @Prop({required: true, default: Date.now})
     createdAt: Date;

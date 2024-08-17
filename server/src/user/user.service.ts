@@ -7,7 +7,7 @@ import { Model } from 'mongoose';
 import * as bcrypt from 'bcrypt';
 
 const SALT_ROUNDS = 10, 
-      SELECT_FIELDS = '-password -salt';
+      SELECT_FIELDS = '+password +salt';
 
 @Injectable()
 export class UserService {
@@ -24,18 +24,41 @@ export class UserService {
   }
 
   findAll(): Promise<User[]> {
-    return this.userModel.find().select(SELECT_FIELDS).exec();
+    return this.userModel.find().exec();
   }
 
   findOne(id: string): Promise<User> {
-    return this.userModel.findById(id).select(SELECT_FIELDS).exec();
+    return this.userModel.findById(id).exec();
   }
 
   update(id: string, updateUserDto: UpdateUserDto): Promise<User> {
-    return this.userModel.findByIdAndUpdate(id, updateUserDto).select(SELECT_FIELDS).exec();
+    return this.userModel.findByIdAndUpdate(id, updateUserDto).exec();
   }
 
   remove(id: string){
-    return this.userModel.findByIdAndDelete(id).select(SELECT_FIELDS).exec();
+    return this.userModel.findByIdAndDelete(id).exec();
   }
+
+  async findByEmail(email: string): Promise<User> {
+    return this.userModel.findOne({email}).exec();
+  }
+
+  async validateUser(email: string, password: string): Promise<User> | null  {
+
+    const user = await this.userModel.findOne({email}).select(SELECT_FIELDS).exec();
+    
+    if (!user) {
+      return null;
+    }
+
+    const hash = bcrypt.hashSync(password, user.salt);
+
+    if (hash === user.password) {
+      return user;
+    }
+
+    return null;
+
+  }
+
 }
