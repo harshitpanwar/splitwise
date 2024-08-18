@@ -1,6 +1,6 @@
 const HeaderDropdown = () => {
   return (
-    <div>
+    <div className="pl-96 z-10">
       <ul>
         <li>My account</li>
         <li>Create a group</li>
