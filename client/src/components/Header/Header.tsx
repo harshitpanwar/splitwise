@@ -1,23 +1,36 @@
-import { FormEvent, useState } from "react";
-import HeaderDropdown from "./HeaderDropdown"
+import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
+import { ChevronDownIcon } from "@heroicons/react/16/solid";
 
 type Props = {userName: string}
 
 const Header = (props: Props) => {
-  const [isVisible, setIsVisible] = useState(false);
-
-  function toggleDropdown(event: FormEvent<HTMLSpanElement>): void {
-    event.preventDefault();
-    setIsVisible(!isVisible);
-  }
-  
   return (
     <nav className="bg-green-400 p-1 border-solid border-l-indigo-800 px-96">
       <div className="container mx-auto flex justify-between items-center">
         <span className="text-lg text-white font-semibold">Expense Tracking App</span>
-        <span className="text-sm text-white cursor-pointer" onClick={toggleDropdown}>{props.userName}</span>
+        <Menu as="div" className="relative inline-block text-left">
+      <div>
+        <MenuButton className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-200">
+          {props.userName}
+          <ChevronDownIcon aria-hidden="true" className="-mr-1 h-5 w-5 text-gray-400" />
+        </MenuButton>
       </div>
-      {isVisible && <HeaderDropdown />}
+
+      <MenuItems transition className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in">
+        <div className="py-1">
+          <MenuItem>
+            <a href="#" className="block p-2 m-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900 rounded"> Your account </a>
+          </MenuItem>
+          <MenuItem>
+            <a href="#" className="block p-2 m-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900 rounded"> Create a group </a>
+          </MenuItem>
+          <MenuItem>
+            <a href="#" className="block p-2 m-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900 rounded"> Log out </a>
+          </MenuItem>
+        </div>
+      </MenuItems>
+    </Menu>
+      </div>
     </nav>
   );
 };
